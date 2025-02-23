@@ -24,3 +24,35 @@ export const Container = styled(Link)`
     height: 18.7rem;
   }
 `;
+
+export const Image = styled.img`
+  height: 11.8rem;
+  width: 100%;
+  overflow: hidden;
+
+  @media (min-width: ${dimensions.mediumDevices}) {
+    height: 13.7rem;
+  }
+`;
+
+export const TextContainer = styled.div`
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+export const CardTitle = styled.p`
+  text-align: center;
+  font-size: var(--fs-200);
+  font-weight: var(--fw-regular);
+  word-spacing: 0.11em;
+  margin: 0.5rem 0.19rem;
+
+  @media (min-width: ${dimensions.mediumDevices}) {
+    font-size: var(--fs-200);
+    margin: 0.5rem 0.19rem;
+  }
+`;
