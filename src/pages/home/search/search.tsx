@@ -26,6 +26,8 @@ const Search = () => {
         null;
       }}
     />
+    {error && <ErrorMessage text={error.message} />}
+
     <SearchList data={tvSeries} />
   );
 };
