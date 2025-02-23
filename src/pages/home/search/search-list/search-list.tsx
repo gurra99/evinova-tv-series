@@ -9,7 +9,7 @@ interface ISearchList {
 
 const SearchList = (props: ISearchList) => {
   console.log("data");
-  console.log(props.data);
+
   return (
     <Container>
       {props.data.map((item, index) => {

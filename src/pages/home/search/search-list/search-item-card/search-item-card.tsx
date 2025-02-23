@@ -15,10 +15,10 @@ const SearchItemCard = (props: ISearchItemCard) => {
   const { show } = props;
 
   return (
-    <Container to={`tv-serie/${show.id}`} data-cy="grid-card-link">
-      <Image src={show.image?.original} alt="tv-serie-image" />
+    <Container to={`tv-serie/${show?.id}`} data-cy="grid-card-link">
+      <Image src={show?.image?.original} alt="tv-serie-image" />
       <TextContainer>
-        <CardTitle>{show.name}</CardTitle>
+        <CardTitle>{show?.name || "Unknown"}</CardTitle>
       </TextContainer>
     </Container>
   );
