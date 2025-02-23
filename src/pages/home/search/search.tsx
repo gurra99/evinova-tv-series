@@ -40,11 +40,6 @@ const Search = () => {
   const isNoResultsFound =
     !isLoading && !error && searchDebouncedValue && tvSeries?.length === 0;
 
-  console.log("Search");
-  console.log(tvSeries);
-  console.log(searchValue);
-  console.log(searchDebouncedValue);
-
   return (
     <Container>
       <Header className="secondary-heading">Search Tv-series</Header>

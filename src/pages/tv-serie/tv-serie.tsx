@@ -30,21 +30,18 @@ const TvSerie = () => {
     queryFn: () => fetchTvSerieById(id),
   });
 
-  console.log("Tv-Serie");
-  console.log(tvSerie);
-
   return (
     <Container>
       {!isLoading ? (
         <MovieContainer>
-          <Image src={tvSerie?.image.original} alt="movie" />
+          <Image src={tvSerie?.image?.original} alt="movie" />
           <TextContainer>
             <Header className="secondary-heading">
               {tvSerie?.name || "Unknown"}
             </Header>
             <RowContainer>
               <RowName>Rating:</RowName>
-              <RowValue>{tvSerie?.rating.average || "Unknown"}</RowValue>
+              <RowValue>{tvSerie?.rating?.average || "Unknown"}</RowValue>
             </RowContainer>
             <RowContainer>
               <RowName>Status:</RowName>
