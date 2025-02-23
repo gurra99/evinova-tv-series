@@ -7,6 +7,7 @@ import { useDebounce } from "../../../components/hooks/use-debounce";
 import SearchList from "./search-list/search-list";
 import { ErrorMessage } from "../../../components/fragments/error-message/error-message";
 import { LoadingSpinner } from "../../../components/fragments/loading-spinner/loading-spinner";
+import { EmptyListMessage } from "../../../components/fragments/empty-list-message/empty-list-message";
 import DataContext from "../../../context/data-context";
 import { ITvSerieResult } from "../../../model/tv-series.model";
 
@@ -36,7 +37,13 @@ const Search = () => {
     enabled: !!searchDebouncedValue,
   });
 
+  const isNoResultsFound =
+    !isLoading && !error && searchDebouncedValue && tvSeries?.length === 0;
+
+  console.log("Search");
   console.log(tvSeries);
+  console.log(searchValue);
+  console.log(searchDebouncedValue);
 
   return (
     <Container>
@@ -57,6 +64,8 @@ const Search = () => {
       )}
 
       {error && <ErrorMessage text={error.message} />}
+
+      {isNoResultsFound && <EmptyListMessage text="No results found" />}
 
       {/* Show results only if data is available */}
       {!isLoading && tvSeries && !error && tvSeries?.length > 0 && (

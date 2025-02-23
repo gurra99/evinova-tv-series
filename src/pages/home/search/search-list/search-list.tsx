@@ -1,5 +1,6 @@
 import React from "react";
 import { Container } from "./search-list.styles";
+import SearchItemCard from "./search-item-card/search-item-card";
 import { ITvSerieResult } from "../../../../model/tv-series.model";
 
 interface ISearchList {
@@ -12,7 +13,7 @@ const SearchList = (props: ISearchList) => {
   return (
     <Container>
       {props.data.map((item, index) => {
-        return <p>test</p>;
+        return <SearchItemCard show={item.show} key={index} />;
       })}
     </Container>
   );
