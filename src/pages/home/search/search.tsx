@@ -16,7 +16,16 @@ const Search = () => {
 
   console.log(tvSeries);
 
-  return;
+  return (
+    <InputField
+      value={null}
+      data-cy="search-input"
+      placeHolderValue="Search"
+      onChangeHandler={() => {
+        null;
+      }}
+    />
+  );
 };
 
 export default Search;
