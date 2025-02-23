@@ -43,6 +43,7 @@ const Search = () => {
   console.log("Search");
   console.log(tvSeries);
   console.log(searchValue);
+  console.log(searchDebouncedValue);
 
   return (
     <Container>

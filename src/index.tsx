@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { DataProvider } from "./context/data-context";
 
 const client = new QueryClient();
 
@@ -13,9 +14,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <QueryClientProvider client={client}>
-        <App />
-      </QueryClientProvider>
+      <DataProvider>
+        <QueryClientProvider client={client}>
+          <App />
+        </QueryClientProvider>
+      </DataProvider>
     </BrowserRouter>
   </React.StrictMode>,
 );
