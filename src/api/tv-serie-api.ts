@@ -7,6 +7,10 @@ export const fetchTvSerieByName = async (name: string | null) => {
     ...fetchOptions("GET", "application/json"),
   });
 
+  if (!res.ok) {
+    throw new Error("Failed to fetch tv-serie");
+  }
+
   const json = await res.json();
   return json;
 };
