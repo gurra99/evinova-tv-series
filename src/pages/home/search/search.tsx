@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { Container, Header } from "./search.styles";
+import InputField from "../../../components/fragments/input-field/input-field";
 import { useQuery } from "@tanstack/react-query";
 import { fetchTvSerieByName } from "../../../api/tv-serie-api";
-import InputField from "../../../components/fragments/input-field/input-field";
-import { LoadingSpinner } from "../../../components/fragments/loading-spinner/loading-spinner";
-import { ErrorMessage } from "../../../components/fragments/error-message/error-message";
+import { useDebounce } from "../../../components/hooks/use-debounce";
 import SearchList from "./search-list/search-list";
+import { ErrorMessage } from "../../../components/fragments/error-message/error-message";
+import { LoadingSpinner } from "../../../components/fragments/loading-spinner/loading-spinner";
+import DataContext from "../../../context/data-context";
+import { ITvSerieResult } from "../../../model/tv-series.model";
 
 const Search = () => {
+  const [isConnectionSlow, setIsConnectionSlow] = useState<boolean>(false);
   const { setSearchValue, searchValue } = useContext(DataContext);
   const searchDebouncedValue = useDebounce<string>(searchValue);
 
@@ -14,30 +19,50 @@ const Search = () => {
     data: tvSeries,
     isLoading,
     error,
-  } = useQuery({
-    queryKey: ["tv-serie", "Star Wars"],
+  } = useQuery<ITvSerieResult[], Error>({
+    queryKey: ["tv-serie", searchDebouncedValue],
     queryFn: async () => {
-      return await fetchTvSerieByName("Star Wars");
+      setIsConnectionSlow(false);
+      // Set a timeout to mark the connection as slow if the request takes too long
+      const slowTimeout = setTimeout(() => setIsConnectionSlow(true), 1500);
+      try {
+        return await fetchTvSerieByName(searchDebouncedValue);
+      } finally {
+        // Clear the timeout once the request is complete
+        clearTimeout(slowTimeout);
+      }
     },
+    // Ensures the query is only triggered if there is a non-empty debounced search value.
+    enabled: !!searchDebouncedValue,
   });
 
   console.log(tvSeries);
 
   return (
-    <InputField
-      value={null}
-      data-cy="search-input"
-      placeHolderValue="Search"
-      onChangeHandler={() => {
-        null;
-      }}
-    />
-    {isLoading && <LoadingSpinner />}
+    <Container>
+      <Header className="secondary-heading">Search Tv-series</Header>
+      <InputField
+        value={searchValue}
+        data-cy="search-input"
+        placeHolderValue="Search"
+        onChangeHandler={(event) => {
+          setSearchValue(event.target.value);
+        }}
+      />
 
+      {isLoading && <LoadingSpinner />}
 
-    {error && <ErrorMessage text={error.message} />}
+      {isConnectionSlow && !error && (
+        <ErrorMessage text="⚠️ Your internet seems slow..." />
+      )}
 
-    <SearchList data={tvSeries} />
+      {error && <ErrorMessage text={error.message} />}
+
+      {/* Show results only if data is available */}
+      {!isLoading && tvSeries && !error && tvSeries?.length > 0 && (
+        <SearchList data={tvSeries} />
+      )}
+    </Container>
   );
 };
 
