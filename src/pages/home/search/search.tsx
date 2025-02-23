@@ -1,6 +1,7 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchTvSerieByName } from "../../../api/tv-serie-api";
+import InputField from "../../../components/fragments/input-field/input-field";
 
 const Search = () => {
   const {
@@ -25,6 +26,7 @@ const Search = () => {
         null;
       }}
     />
+    <SearchList data={tvSeries} />
   );
 };
 
