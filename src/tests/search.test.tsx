@@ -32,3 +32,15 @@ test("should navigate to the correct TV series page when a search result is clic
   screen.logTestingPlaygroundURL();
   expect(global.window.location.pathname).toContain("/tv-serie/52341");
 });
+
+it("should show results after typing in the search input", async () => {
+  customRender(<Search />);
+  const input = screen.getByPlaceholderText("Search");
+
+  await user.click(input);
+  await user.keyboard("Life Tracker Lee Jae Goo");
+  await waitForSearchResults();
+
+  const tvSeries = await screen.findAllByText(/Life Tracker Lee Jae Goo/i);
+  expect(tvSeries.length).toBeGreaterThan(0);
+});
